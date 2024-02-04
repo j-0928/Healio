@@ -1,7 +1,6 @@
 import os, time, json
 from openai import OpenAI
 def pretty_print(messages):
-    print("# Messages")
     for m in messages:
         print(f"{m.role}: {m.content[0].text.value}")
     print()
@@ -30,12 +29,9 @@ def create_thread_and_run(user_input):
     thread = client.beta.threads.create()
     run = submit_message(assistant_id, thread, user_input)
     return thread, run
-
-
-# Emulating concurrent user requests
 inputstring = input("Enter symptoms: ")
 thread1, run1 = create_thread_and_run(
     inputstring
 )
 run1 = wait_on_run(run1, thread1)
-pretty_print(get_response(thread1))
+print(pretty_print(get_response(thread1)))
